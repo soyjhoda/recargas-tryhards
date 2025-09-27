@@ -127,23 +127,34 @@ body {
   color: #f0f0f0;
 }
 
-/* Estilo para los BADGES (100% Seguro) */
+/* Estilo para los BADGES (Rápido, Fácil, Seguro) */
 .badges {
+  /* ESTO CENTRA EL CONTENIDO HORIZONTALMENTE */
   display: flex;
-  justify-content: center;
+  justify-content: center; 
   gap: 15px;
-  margin: 25px 0;
+  margin: 25px auto;
   flex-wrap: wrap;
+  max-width: 600px; /* Limita el ancho para centrar el bloque */
 }
 
-.badges span {
+.badges .badge-item { 
   background: #2a2333;  
   padding: 8px 15px;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
   border: 1px solid #c77dff;  
+  /* ESTO ALINEA EL ICONO Y EL TEXTO */
+  display: flex; 
+  align-items: center;
+  gap: 8px; /* Espacio entre el icono y el texto */
 }
+
+.badges .badge-item i {
+    color: #ff7700; /* Color naranja llamativo para los iconos */
+}
+
 
 .buttons {
   display: flex;
