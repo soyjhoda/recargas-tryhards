@@ -1,9 +1,12 @@
+// CORRECCIÓN: Importar la función createClient directamente desde el script global.
+const { createClient } = window.supabase;
+
 // 🔑 CONFIGURACIÓN DE SUPABASE
 const SUPABASE_URL = 'https://htpeqjdlzzygczrvhcll.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0cGVxamRsenp5Z2N6cnZoY2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MzQ1NTMsImV4cCI6MjA3NDUxMDU1M30.dForPgwzfR5eusItwPYL-e3zj97Od6p4tWXc_CFlRtA';
 
-// Usar versión global (sin módulos)
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// USAR CORRECCIÓN: Usamos createClient importado arriba.
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Cargar productos por categoría (solo en páginas como fc-mobile.html)
 function loadProductsByCategory(category) {
@@ -19,7 +22,7 @@ function loadProductsByCategory(category) {
     .then(({ data, error }) => {
       if (error) {
         container.innerHTML = '<p>Error al cargar productos.</p>';
-        console.error(error);
+        console.error('Error al cargar productos:', error);
         return;
       }
 
@@ -49,7 +52,11 @@ function loadReviews() {
     .select('*')
     .order('created_at', { ascending: false })
     .then(({ data, error }) => {
-      if (error || data.length === 0) return;
+      if (error) {
+          console.error('Error al cargar reseñas:', error);
+          return;
+      }
+      if (data.length === 0) return;
 
       slider.innerHTML = data.map(r => `
         <div class="swiper-slide">
