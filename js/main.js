@@ -2,13 +2,19 @@
 const SUPABASE_URL = 'https://htpeqjdlzzygczrvhcll.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0cGVxamRsenp5Z2N6cnZoY2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MzQ1NTMsImV4cCI6MjA3NDUxMDU1M30.dForPgwzfR5eusItwPYL-e3zj97Od6p4tWXc_CFlRtA';
 
-// 🛑 CORRECCIÓN CLAVE: Inicializa Supabase usando la función createClient disponible globalmente.
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// 🛑 CORRECCIÓN FINAL: Inicializa Supabase usando la referencia global correcta.
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Cargar productos por categoría (solo en páginas como fc-mobile.html)
 function loadProductsByCategory(category) {
   const container = document.getElementById('products-container');
   if (!container) return; // Si no hay contenedor, no hacer nada
+
+  // Agregamos un chequeo de Supabase para debug
+  if (!supabase) {
+    container.innerHTML = '<p>Error de inicialización de la base de datos.</p>';
+    return;
+  }
 
   supabase
     .from('products')
@@ -18,7 +24,7 @@ function loadProductsByCategory(category) {
     .order('created_at', { ascending: false })
     .then(({ data, error }) => {
       if (error) {
-        container.innerHTML = '<p>Error al cargar productos.</p>';
+        container.innerHTML = `<p>Error al cargar productos: ${error.message}</p>`; // Mostrar error detallado
         console.error('Error al cargar productos:', error);
         return;
       }
@@ -43,6 +49,8 @@ function loadProductsByCategory(category) {
 function loadReviews() {
   const slider = document.getElementById('reviews-slider');
   if (!slider) return;
+
+  if (!supabase) return; // Chequeo de Supabase
 
   supabase
     .from('reviews')
