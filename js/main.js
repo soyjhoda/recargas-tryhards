@@ -1,12 +1,9 @@
-// CORRECCIÓN: Importar la función createClient directamente desde el script global.
-const { createClient } = window.supabase;
-
 // 🔑 CONFIGURACIÓN DE SUPABASE
 const SUPABASE_URL = 'https://htpeqjdlzzygczrvhcll.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0cGVxamRsenp5Z2N6cnZoY2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MzQ1NTMsImV4cCI6MjA3NDUxMDU1M30.dForPgwzfR5eusItwPYL-e3zj97Od6p4tWXc_CFlRtA';
 
-// USAR CORRECCIÓN: Usamos createClient importado arriba.
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// 🛑 CORRECCIÓN CLAVE: Inicializa Supabase usando la función createClient disponible globalmente.
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Cargar productos por categoría (solo en páginas como fc-mobile.html)
 function loadProductsByCategory(category) {
