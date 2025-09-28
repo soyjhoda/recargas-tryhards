@@ -1,16 +1,26 @@
-﻿function loadProductsByCategory(targetCategory) {
+﻿// js/main.js — Conexión automática con Supabase vía Netlify Functions
+function loadProductsByCategory(targetCategory) {
   const container = document.getElementById('products-container');
   if (!container) return;
 
+  // Usa la función de Netlify para evitar bloqueos de CSP
   fetch('/.netlify/functions/get-products')
-    .then(res => res.json())
+    .then(response => response.json())
     .then(products => {
+      if (!Array.isArray(products)) {
+        console.error('Formato de productos inválido:', products);
+        container.innerHTML = '<p>Error al cargar los productos.</p>';
+        return;
+      }
+
       const filtered = products.filter(p => 
+        p.active && 
+        p.category && 
         p.category.trim().toLowerCase() === targetCategory.trim().toLowerCase()
       );
 
       if (filtered.length === 0) {
-        container.innerHTML = `<p>No hay productos para "${targetCategory}".</p>`;
+        container.innerHTML = `<p>No hay productos disponibles para "${targetCategory}".</p>`;
         return;
       }
 
@@ -24,14 +34,20 @@
       `).join('');
     })
     .catch(err => {
-      console.error('Error:', err);
-      container.innerHTML = '<p>Error al cargar productos.</p>';
+      console.error('Error al cargar productos:', err);
+      container.innerHTML = '<p>No se pudieron cargar los productos. Inténtalo más tarde.</p>';
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (location.pathname.includes('fc-mobile.html')) loadProductsByCategory('FC Mobile');
-  else if (location.pathname.includes('roblox.html')) loadProductsByCategory('Roblox');
-  else if (location.pathname.includes('free-fire.html')) loadProductsByCategory('Free Fire');
-  else if (location.pathname.includes('call-of-duty.html')) loadProductsByCategory('Call of Duty');
+  const path = window.location.pathname;
+  if (path.includes('fc-mobile.html')) {
+    loadProductsByCategory('FC Mobile');
+  } else if (path.includes('roblox.html')) {
+    loadProductsByCategory('Roblox');
+  } else if (path.includes('free-fire.html')) {
+    loadProductsByCategory('Free Fire');
+  } else if (path.includes('call-of-duty.html')) {
+    loadProductsByCategory('Call of Duty');
+  }
 });

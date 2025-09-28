@@ -1,11 +1,12 @@
-import { createClient } from '@supabase/supabase-js';
+// netlify/functions/get-products.js
+const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
   'https://htpeqjdlzzygczrvhcll.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0cGVxamRsenp5Z2N6cnZoY2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MzQ1NTMsImV4cCI6MjA3NDUxMDU1M30.dForPgwzfR5eusItwPYL-e3zj97Od6p4tWXc_CFlRtA'
 );
 
-export async function handler(event) {
+exports.handler = async (event, context) => {
   try {
     const { data, error } = await supabase
       .from('products')
@@ -13,17 +14,27 @@ export async function handler(event) {
       .eq('active', true)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error:', error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Error al cargar productos' })
+      };
+    }
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify(data)
     };
   } catch (err) {
+    console.error('Server error:', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message })
+      body: JSON.stringify({ error: 'Error interno del servidor' })
     };
   }
-}
+};
