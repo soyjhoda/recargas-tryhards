@@ -1,16 +1,16 @@
-// 🔑 CONFIGURACIÓN DE SUPABASE
+﻿// 🔑 CONFIGURACIÓN DE SUPABASE
 const SUPABASE_URL = 'https://htpeqjdlzzygczrvhcll.supabase.co';
+// Clave verificada: no tiene espacios.
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0cGVxamRsenp5Z2N6cnZoY2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MzQ1NTMsImV4cCI6MjA3NDUxMDU1M30.dForPgwzfR5eusItwPYL-e3zj97Od6p4tWXc_CFlRtA';
 
-// 🛑 CORRECCIÓN FINAL: Inicializa Supabase usando la referencia global correcta (para evitar ReferenceError).
+// 🛑 CORRECCIÓN FINAL: Inicializa Supabase usando la referencia global correcta (window.supabase).
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Cargar productos por categoría (solo en páginas como fc-mobile.html)
 function loadProductsByCategory(category) {
   const container = document.getElementById('products-container');
-  if (!container) return; // Si no hay contenedor, no hacer nada
+  if (!container) return; 
 
-  // Chequeo para ver si la base de datos se inicializó
   if (!supabase) {
     container.innerHTML = '<p>Error de inicialización de la base de datos.</p>';
     return;
@@ -19,7 +19,7 @@ function loadProductsByCategory(category) {
   supabase
     .from('products')
     .select('*')
-    // Filtros activados para asegurar la correcta segmentación de productos
+    // Filtros activos para segmentación de productos
     .eq('category', category) 
     .eq('active', true)
     .order('created_at', { ascending: false })
@@ -58,10 +58,10 @@ function loadReviews() {
     .order('created_at', { ascending: false })
     .then(({ data, error }) => {
       if (error) {
-          console.error('Error al cargar reseñas:', error);
-          return;
-      }
-      if (data.length === 0) return;
+          console.error('Error al cargar reseñas:', error);
+          return;
+      }
+      if (data.length === 0) return;
 
       slider.innerHTML = data.map(r => `
         <div class="swiper-slide">

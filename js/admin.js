@@ -1,6 +1,7 @@
-// 🔑 CONFIGURACIÓN
+﻿// 🔑 CONFIGURACIÓN
 const ADMIN_PASSWORD = 'm4r1nl3ym4r$$$';
 const SUPABASE_URL = 'https://htpeqjdlzzygczrvhcll.supabase.co';
+// Clave verificada: no tiene espacios.
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0cGVxamRsenp5Z2N6cnZoY2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MzQ1NTMsImV4cCI6MjA3NDUxMDU1M30.dForPgwzfR5eusItwPYL-e3zj97Od6p4tWXc_CFmRtA';
 
 // 🛑 CORRECCIÓN FINAL: Inicializa Supabase usando la referencia global correcta.
