@@ -1,4 +1,3 @@
-// netlify/functions/get-products.js
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
@@ -15,7 +14,7 @@ exports.handler = async (event, context) => {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('Supabase error:', error.message);
       return {
         statusCode: 500,
         body: JSON.stringify({ error: 'Error al cargar productos' })
