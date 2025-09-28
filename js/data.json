@@ -1,0 +1,23 @@
+{
+  "FC Mobile": [
+    {
+      "name": "200 FC Points",
+      "price": 5,
+      "active": true
+    },
+    {
+      "name": "Pase Estelar",
+      "price": 15,
+      "active": true
+    }
+  ],
+  "Roblox": [
+    {
+      "name": "80 Robux",
+      "price": 2,
+      "active": true
+    }
+  ],
+  "Free Fire": [],
+  "Call of Duty": []
+}
