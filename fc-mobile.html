@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="/assets.css">
 </head>
 <body>
-  
   <header class="hero">
     <div class="container">
       <h1>FC Mobile</h1>
@@ -20,11 +19,21 @@
     <div class="container">
       <h2>Paquetes de FC Mobile</h2>
       <div id="products-container" class="products-grid">
-        <p>Cargando productos...</p>
+        <!-- Productos directamente en el HTML -->
+        <div class="product-card">
+          <h3>200 FC Points</h3>
+          <p>FC Mobile</p>
+          <div class="price">$5</div>
+          <button onclick="window.open('https://wa.me/+584127442672', '_blank')">Comprar</button>
+        </div>
+        <div class="product-card">
+          <h3>Pase Estelar</h3>
+          <p>FC Mobile</p>
+          <div class="price">$15</div>
+          <button onclick="window.open('https://wa.me/+584127442672', '_blank')">Comprar</button>
+        </div>
       </div>
     </div>
   </section>
-
-  <script src="/js/main.js"></script>
 </body>
 </html>
