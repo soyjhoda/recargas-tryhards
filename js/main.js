@@ -1,11 +1,9 @@
-﻿// js/main.js — Conexión automática con Supabase vía Netlify Functions
-function loadProductsByCategory(targetCategory) {
+﻿function loadProductsByCategory(targetCategory) {
   const container = document.getElementById('products-container');
   if (!container) return;
 
-  // Usa la función de Netlify para evitar bloqueos de CSP
   fetch('/.netlify/functions/get-products')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(products => {
       if (!Array.isArray(products)) {
         console.error('Formato de productos inválido:', products);

@@ -10,11 +10,17 @@ exports.handler = async () => {
   try {
     const { data, error } = await supabase
       .from('products')
-      .select('id, name, game, category, price, active')
+      .select('*')
       .eq('active', true)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error:', error.message);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Error al cargar productos'})
+      };
+    }
 
     return {
       statusCode: 200,
@@ -25,9 +31,10 @@ exports.handler = async () => {
       body: JSON.stringify(data)
     };
   } catch (err) {
+    console.error('Server error:', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error interno' })
+      body: JSON.stringify({ error: 'Error interno del servidor'})
     };
   }
 };
